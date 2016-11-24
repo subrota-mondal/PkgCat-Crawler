@@ -20,7 +20,7 @@ class Crawler:
                   .format(category, i, len(categories)))
 
             for pkg in crawler.get_all_packages(category):
-                self.db.update_categories(pkg, category)
+                self.db.insert_package(pkg, category)
             self.db.commit()
 
     def crawl_fdroid(self):
@@ -28,6 +28,6 @@ class Crawler:
            with the all the available applications on F-Droid"""
         crawler = FDroidCrawler()
         for pkg, categories in crawler.yield_packages_categories():
-            self.db.update_categories(pkg, categories)
+            self.db.insert_package(pkg, categories)
 
         self.db.commit()
