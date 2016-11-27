@@ -29,7 +29,7 @@ class Database:
 
     def insert_package(self, package, categories):
         """Inserts the given package and relates it to the given categories if it doesn't exist.
-           Otherwise, the information is *not* updated"""
+           Otherwise, the information is *not* updated, and False is returned"""
 
         # Ensure we have a list of categories
         if isinstance(categories, str):
@@ -45,6 +45,9 @@ class Database:
                 # Add them to the many-to-many table
                 self.c.execute('insert into package_category values(?, ?)',
                                (package_id, category_id))
+            return True
+        else:
+            return False
 
     def insert_category(self, category):
         """Inserts or ignores the given category in the database and returns its ID"""
